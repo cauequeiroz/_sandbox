@@ -106,9 +106,9 @@ Para listas **ordenadas**, basta utilizar a numeração antes de cada item.
 A sintaxe para inserir imagens é bem semelhante da dos links: `![text_do_alt](url_da_imagem)`.
 
 ```
-![Google](img/google.jpg)
+![Google](assets/google.jpg)
 ```
-![Google](img/google.jpg)
+![Google](assets/google.jpg)
 
 - Também podemos colocar um tittle na imagem seguindo a sintaxe: `![text_do_alt](url_da_imagem "text_do_title")`
 
