@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML5 Game Engine</title>
+	<script src="animation.js"></script>
+	<script src="keyboard.js"></script>
+	<script src="spritesheet.js"></script>
+	<script src="sonic.js"></script>
+	<style>
+		body { background: #ecf0f1; text-align: center; }
+		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="600" height="300"></canvas>
+	<script>
+		
+		// Get canvas and set context
+		var canvas = document.getElementById('canvas'),
+			ctx    = canvas.getContext('2d');
+
+		// Import classes
+		var animation = new Animation(ctx),
+			keyboard  = new Keyboard(document);
+
+		// Create sonic
+		var sonic_img = new Image();
+			sonic_img.src = 'spritesheet.png';
+		var sonic = new Sonic(ctx, sonic_img, keyboard);
+
+		// Start animation loop
+		animation.addSprite(sonic);
+		sonic_img.onload = function() {
+			animation.start();
+		}
+		
+	</script>
+</body>
+</html>

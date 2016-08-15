@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML5 Game Engine</title>
+	<script src="ball.js"></script>
+	<script src="animation.js"></script>
+	<script src="keyboard.js"></script>
+	<script src="hero.js"></script>
+	<style>
+		body { background: #ecf0f1; text-align: center; }
+		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="600" height="300"></canvas>
+	<script>
+		
+		// Get canvas and set context
+		var canvas = document.getElementById('canvas'),
+			ctx    = canvas.getContext('2d');
+
+		// Import libs
+		var animation = new Animation(ctx),
+			keyboard  = new Keyboard(document);
+		
+		// Create generic hero
+		var hero = new Hero(ctx, keyboard, animation);
+			hero.x = 0;
+			hero.y = 125;
+			hero.color = '#16a085';
+
+		keyboard.tap(KEY_SPACE, function() {
+			hero.shot();
+		});
+
+		// Start animation loop
+		animation.addSprite(hero);
+		animation.start();
+	</script>
+</body>
+</html>

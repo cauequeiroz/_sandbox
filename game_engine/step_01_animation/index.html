@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML5 Game Engine</title>
+	<script src="ball.js"></script>
+	<script src="animation.js"></script>
+	<style>
+		body { background: #ecf0f1; text-align: center; }
+		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="600" height="300"></canvas>
+	<script>
+		
+		// Get canvas and set context
+		var canvas = document.getElementById('canvas'),
+			ctx    = canvas.getContext('2d');
+
+		// Create first sprite
+		var ball = new Ball(ctx);
+			ball.x = 100;
+			ball.y = 100;
+			ball.speedX = 10;
+			ball.speedY = -2;
+			ball.radius = 15;
+			ball.color = '#2980b9';
+
+		// Create animation loop
+		var animation = new Animation(ctx);
+			animation.addSprite(ball);
+			animation.start();
+
+	</script>
+</body>
+</html>
