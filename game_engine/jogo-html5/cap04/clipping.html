@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Step 3: Spritesheets</title>
+	<style>
+		body { text-align: center; padding-top: 100px; }
+		canvas { border: 1px dotted black; margin-top: 50px; }
+	</style>
+</head>
+<body>
+	<h1>Step 3: Spritesheets</h1>
+
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<script>
+		var canvas = document.getElementById('canvas'),
+			context = canvas.getContext('2d');
+
+		var sonic = new Image();
+			sonic.src = 'spritesheet.png';
+			sonic.onload = function() {
+				
+				// Initial data
+				var n_row = 3,
+					n_col = 8,
+					width = sonic.width / n_col,
+					height = sonic.height / n_row;
+
+				// Select row and col
+				var s_row = 2,
+					s_col = 2,
+					x = width * ( s_col - 1 ),
+					y = height * ( s_row - 1 );
+
+				context.drawImage(
+					sonic,
+					x, y, width, height,
+					20, 20, width, height
+				)
+			}
+	</script>
+</body>
+</html>

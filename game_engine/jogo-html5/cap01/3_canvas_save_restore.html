@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Canvas HTML5</title>
+	<style type="text/css">
+		body { text-align: center; }
+		h1 { margin: 100px 0 50px; }
+	</style>
+</head>
+<body>
+	<h1>Canvas HTML5</h1>
+
+	<canvas id="main-canvas" width="400" height="200">
+		Update your browser, please :)
+	</canvas>
+	<script>
+		var canvas = document.getElementById('main-canvas'),
+			context = canvas.getContext('2d');
+
+		// c.save() - save config
+		// c.restore() - restore config
+		context.fillStyle = '#9b59b6';
+		context.fillRect(20, 20, 100, 100);
+
+		context.save();
+
+		context.fillStyle = '#e74c3c';
+		context.fillRect(150, 20, 100, 100);
+
+		context.restore();
+
+		context.fillRect(280, 20, 100, 100);
+	</script>
+</body>
+</html>

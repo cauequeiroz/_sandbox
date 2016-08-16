@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Step 1: Animation loop</title>
+	<script src="animacao.js"></script>
+	<script src="bola.js"></script>
+	<style>
+		body { text-align: center; padding-top: 100px; }
+		canvas { border: 1px dotted black; margin-top: 50px; }
+	</style>
+</head>
+<body>
+	<h1>Step 1: Animation loop</h1>
+
+	<canvas id="canvas" width="500" height="500">
+		Update your browser, please :)
+	</canvas>
+	<script>
+		// Get canvas and set context
+		var canvas = document.getElementById('canvas'),
+			context = canvas.getContext('2d');
+
+		// Create sprites
+		var b1 = new Bola(context);
+		b1.x = 100;
+		b1.y = 100;
+		b1.velX = 10;
+		b1.velY = -5;
+		b1.cor = 'red';
+		b1.raio = 15;
+
+		var b2 = new Bola(context);
+		b2.x = 100;
+		b2.y = 100;
+		b2.velX = -5;
+		b2.velY = -9;
+		b2.cor = 'blue';
+		b2.raio = 8;
+
+		var b3 = new Bola(context);
+		b3.x = 100;
+		b3.y = 100;
+		b3.velX = 19;
+		b3.velY = 20;
+		b3.cor = 'green';
+		b3.raio = 28;
+
+		// Create animation loop
+		var animacao = new Animacao(context);
+		animacao.novoSprite(b1);
+		animacao.novoSprite(b2);
+		animacao.novoSprite(b3);
+
+		animacao.ligar();
+	</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Canvas HTML5</title>
+	<style type="text/css">
+		body { text-align: center; }
+		h1 { margin: 100px 0 50px; }
+	</style>
+</head>
+<body>
+	<h1>Canvas HTML5</h1>
+
+	<canvas id="main-canvas" width="600" height="600">
+		Update your browser, please :)
+	</canvas>
+	<script>
+		var canvas = document.getElementById('main-canvas'),
+			context = canvas.getContext('2d');
+
+		// Insert images without crop
+		var img = new Image();
+		img.src = 'img/ovni.png';
+		img.onload = function() {
+			var x = 20;
+			for ( var i=0; i<6; i++ ) {
+				context.drawImage(img, x, 20, 64, 32);
+				x += 70;
+			}
+		}
+
+		// Insert images with crop
+		var explosion = new Image();
+		explosion.src = 'img/explosao.png';
+		explosion.onload = function() {
+			context.drawImage(
+				explosion,
+				80, 10, 60, 65,
+				20, 100, 60, 65
+			);
+		}
+
+
+	</script>
+</body>
+</html>

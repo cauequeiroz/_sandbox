@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Step 3: Spritesheets</title>
+	<script src="spritesheet.js"></script>
+	<style>
+		body { text-align: center; padding-top: 100px; }
+		canvas { border: 1px dotted black; margin-top: 50px; }
+	</style>
+</head>
+<body>
+	<h1>Step 3: Spritesheets</h1>
+
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<script>
+		var canvas = document.getElementById('canvas'),
+			context = canvas.getContext('2d');
+
+		var sonic = new Image();
+			sonic.src = 'spritesheet.png';
+
+		var sheet = new Spritesheet(context, sonic, 3, 8);
+			sheet.intervalo = 41;
+			sheet.linha = 1;
+
+		sonic.onload = gameLoop;
+		function gameLoop() {
+			context.clearRect(0, 0, canvas.width, canvas.height);
+
+			sheet.nextFrame();
+			sheet.draw(100, 100);
+
+			requestAnimationFrame(gameLoop);
+		}
+
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Canvas HTML5</title>
+	<style type="text/css">
+		body { text-align: center; }
+		h1 { margin: 100px 0 50px; }
+	</style>
+</head>
+<body>
+	<h1>Canvas HTML5</h1>
+
+	<canvas id="main-canvas" width="600" height="700">
+		Update your browser, please :)
+	</canvas>
+	<script>
+		// Get canvas element and context
+		var canvas = document.getElementById('main-canvas'),
+			context = canvas.getContext('2d');
+
+		// Full rectangle
+		context.fillRect(50, 50, 100, 100);
+
+		// Just stroke rectangle
+		context.strokeRect(200, 50, 100, 100);
+
+		// Config fill color
+		context.fillStyle = 'grey';
+		context.fillRect(50, 200, 100, 100);
+
+		// Config stroke width and color
+		context.strokeStyle = 'grey';
+		context.lineWidth = 5;
+		context.strokeRect(200, 200, 100, 100);
+
+		// Everything together :)
+		context.fillStyle = '#2980b9';
+		context.strokeStyle = '#2c3e50';
+		context.lineWidth = 5;
+		context.fillRect(350, 50, 200, 250);
+		context.strokeRect(350, 50, 200, 250);
+
+		// Paths
+		//
+		// c.beginPath() - start a path
+		//
+		// c.moveTo(x, y) - set pointer
+		// c.lineTo(x, y) - draw line to here
+		// 
+		// c.fill() - fill a path
+		// c.stroke() - stroke a path
+		context.beginPath();
+
+		context.moveTo(75, 550);
+		context.lineTo(150, 350);
+		context.lineTo(225, 550);
+		context.lineTo(50, 420);
+		context.lineTo(250, 420);
+		context.lineTo(75, 550);
+
+		context.lineWidth = 2;
+		context.strokeStyle = '#8e44ad';
+		context.stroke();
+
+		// Circunferencias e arcos
+		//
+		// c.arc(x, y, raio, angulo_inicial, angulo_final, sentido)
+		context.fillStyle = '#bdc3c7';
+		context.strokeStyle = '#7f8c8d';
+		context.lineWidth = 2;
+
+		context.beginPath();
+		context.arc(400, 400, 40, 90*Math.PI/180, 270*Math.PI/180, false);
+		context.fill();
+		context.stroke();
+
+		context.beginPath();
+		context.arc(500, 400, 40, 90*Math.PI/180, 270*Math.PI/180, true);
+		context.fill();
+		context.stroke();
+
+		context.beginPath();
+		context.arc(450, 500, 40, 0, 2*Math.PI);
+		context.fill();
+		context.stroke();
+	</script>
+</body>
+</html>

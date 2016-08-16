@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Canvas HTML5</title>
+	<style type="text/css">
+		body { text-align: center; }
+		h1 { margin: 100px 0 50px; }
+	</style>
+</head>
+<body>
+	<h1>Canvas HTML5</h1>
+
+	<canvas id="main-canvas" width="400" height="400">
+		Update your browser, please :)
+	</canvas>
+	<script>
+		// Get canvas and set context
+		var canvas = document.getElementById('main-canvas'),
+			context = canvas.getContext('2d');
+
+		// Ball info
+		var x = 20,
+			y = 100,
+			raio = 10,
+			velocidade = 50,
+			time_last = new Date().getTime();
+
+		// First loop
+		requestAnimationFrame(moveBall);
+
+		function moveBall() {
+			// Clear canvas
+			context.clearRect(0, 0, canvas.width, canvas.height);
+
+			// Draw ball
+			context.beginPath();
+			context.arc(x, y, raio, 0, Math.PI*2);
+			context.fill();
+
+			// Move ball in x axys
+			var time_now = new Date().getTime(),
+				time = time_now - time_last;
+
+			x += velocidade * time / 1000;
+
+			// Next loop
+			time_last = time_now;
+			requestAnimationFrame(moveBall);
+		}
+	</script>
+</body>
+</html>

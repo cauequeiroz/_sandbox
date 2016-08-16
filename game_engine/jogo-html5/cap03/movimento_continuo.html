@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Step 2: Keyboard control</title>
+	<script src="teclado.js"></script>
+	<style>
+		body { text-align: center; padding-top: 100px; }
+		canvas { border: 1px dotted black; margin-top: 50px; }
+	</style>
+</head>
+<body>
+	<h1>Step 2: Keyboard control</h1>
+
+	<canvas id="canvas" width="500" height="500">
+		Update your browser, please :)
+	</canvas>
+	<script>
+		// Get canvas and set context
+		var canvas = document.getElementById('canvas'),
+			context = canvas.getContext('2d');
+
+		// Start character
+		var pos = 0;
+		desenharPersonagem();
+
+		// Keyboard Control
+		var teclado = new Teclado(document);
+
+		// Animation loop
+		requestAnimationFrame(animar);
+		function animar() {
+			if ( teclado.pressionada(SETA_ESQUERDA) )
+				pos -= 10;
+			else if ( teclado.pressionada(SETA_DIREITA) )
+				pos += 10;
+
+			desenharPersonagem();
+			requestAnimationFrame(animar);
+		}
+
+		// Draw character
+		function desenharPersonagem() {
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			context.fillRect(pos, 100, 20, 50);
+		}
+	</script>
+</body>
+</html>

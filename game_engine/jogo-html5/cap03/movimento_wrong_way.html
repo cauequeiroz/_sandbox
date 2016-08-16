@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movimentando personagem com keydown</title>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<script>
+		
+		var canvas = document.getElementById('canvas'),
+			context = canvas.getContext('2d');
+
+		var pos = 0;
+		desenharPersonagem();
+
+		document.addEventListener('keydown', function(e) {
+			if ( e.keyCode == 37 ) {
+				pos -= 10;
+				desenharPersonagem();
+			} else if ( e.keyCode == 39 ) {
+				pos += 10;
+				desenharPersonagem();
+			}
+		});
+
+		function desenharPersonagem() {
+			context.clearRect(0, 0, canvas.width, canvas.height);
+			context.fillRect(pos, 100, 20, 50);
+		}
+
+	</script>
+</body>
+</html>

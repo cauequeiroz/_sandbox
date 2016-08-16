@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML5 Game Engine</title>
+	<script src="ball.js"></script>
+	<script src="animation.js"></script>
+	<script src="hero.js"></script>
+	<script src="keyboard.js"></script>
+	<script src="spritesheet.js"></script>
+	<script src="sonic.js"></script>
+	<script src="colisor.js"></script>
+	<style>
+		body { text-align: center; background: #ecf0f1; }
+		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="300"></canvas>
+	<script>
+		// Get canvas and set context
+		var canvas = document.getElementById('canvas'),
+			ctx = canvas.getContext('2d');
+
+		// Create some sprites
+		var ball = new Ball(ctx);
+			ball.x = 100;
+			ball.y = 100;
+			ball.speedX = 10;
+			ball.speedY = -5;
+			ball.radius = 20;
+			ball.color = '#3498db';
+
+		var ball2 = new Ball(ctx);
+			ball2.x = 200;
+			ball2.y = 200;
+			ball2.speedX = -8;
+			ball2.speedY = 10;
+			ball2.radius = 32;
+			ball2.color = '#f39c12';
+
+		// Create collision
+		var collision = new Collision();
+			collision.addSprite(ball);
+			collision.addSprite(ball2);
+
+			collision.anyCollision = function(s1, s2) {
+				console.log('caue');
+			}
+
+		// Game loop
+		requestAnimationFrame(loop);
+		function loop() {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			ball.update();
+			ball2.update();
+
+			ball.draw();
+			ball2.draw();
+
+			collision.process();
+
+			requestAnimationFrame(loop);
+		}
+	</script>
+</body>
+</html>
