@@ -14,6 +14,7 @@ Animation.prototype = {
 	},
 	addSprite: function(sprite) {
 		this.sprites.push(sprite);
+		sprite.animation = this;
 	},
 	clearCanvas: function() {
 		this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);

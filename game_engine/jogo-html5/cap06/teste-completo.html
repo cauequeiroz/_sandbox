@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Parallax background</title>
+	<script src="animacao.js"></script>
+	<script src="teclado.js"></script>
+	<script src="nave.js"></script>
+	<script src="tiro.js"></script>
+	<script src="fundo.js"></script>
+	<style>
+		body { text-align: center; background: #ecf0f1; }
+		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<script>
+
+	var imgEspaco = new Image();
+		imgEspaco.src = 'img/fundo-espaco.png';
+	var imgEstrelas = new Image();
+		imgEstrelas.src = 'img/fundo-estrelas.png';
+	var imgNuvens = new Image();
+		imgNuvens.src = 'img/fundo-nuvens.png';
+	var imgNave = new Image();
+			imgNave.src = 'img/nave.png';
+
+	var img_total = 4,
+		img_carregadas = 0;
+
+	imgEspaco.onload = carregando;
+	imgEstrelas.onload = carregando;
+	imgNuvens.onload = carregando;
+	imgNave.onload = carregando;
+
+	function carregando() {
+		img_carregadas++;
+		if ( img_total === img_carregadas ) iniciar();
+	}
+
+	function iniciar() {
+
+		var canvas = document.querySelector('#canvas'),
+			context = canvas.getContext('2d');
+
+		// Import libs
+		var animacao = new Animacao(context),
+			teclado = new Teclado(document);
+
+		// Create background
+		var fundoEspaco = new Fundo(context, imgEspaco),
+			fundoEstrelas = new Fundo(context, imgEstrelas),
+			fundoNuvens = new Fundo(context, imgNuvens);
+
+		fundoEspaco.velocidade = 3;
+		fundoEstrelas.velocidade = 7;
+		fundoNuvens.velocidade = 10;
+
+		animacao.novoSprite(fundoEspaco);
+		animacao.novoSprite(fundoEstrelas);
+		animacao.novoSprite(fundoNuvens);
+
+		// Create nave		
+		var nave = new Nave(context, teclado, imgNave);
+				nave.x = canvas.width / 2 - imgNave.width / 2;
+				nave.y = canvas.height - imgNave.height;
+				nave.velocidade = 5;
+		animacao.novoSprite(nave);
+
+		teclado.disparou(ESPACO, function() {
+			nave.atirar();
+		});
+
+		// animation loop
+		animacao.ligar();
+	}
+	</script>
+</body>
+</html>

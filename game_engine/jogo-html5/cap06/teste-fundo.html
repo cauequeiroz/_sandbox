@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Parallax background</title>
+	<script src="animacao.js"></script>
+	<script src="fundo.js"></script>
+	<style>
+		body { text-align: center; background: #ecf0f1; }
+		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<script>
+		
+	var imgEspaco = new Image();
+		imgEspaco.src = 'img/fundo-espaco.png';
+	var imgEstrelas = new Image();
+		imgEstrelas.src = 'img/fundo-estrelas.png';
+	var imgNuvens = new Image();
+		imgNuvens.src = 'img/fundo-nuvens.png';
+
+	imgEspaco.onload = carregando;
+	imgEstrelas.onload = carregando;
+	imgNuvens.onload = carregando;
+
+	var carregadas = 0,
+		total = 3;
+	function carregando() {
+		carregadas++;
+		if ( carregadas === total ) iniciar();
+	}
+
+	function iniciar() {
+		var canvas = document.querySelector('#canvas'),
+			context = canvas.getContext('2d');
+
+		// Add background sprites
+		var fundoEspaco = new Fundo(context, imgEspaco),
+			fundoEstrelas = new Fundo(context, imgEstrelas),
+			fundoNuvens = new Fundo(context, imgNuvens);
+
+		fundoEspaco.velocidade = 3;
+		fundoEstrelas.velocidade = 7;
+		fundoNuvens.velocidade = 10;
+
+		// Add animation loop
+		var animacao = new Animacao(context);
+			animacao.novoSprite(fundoEspaco);
+			animacao.novoSprite(fundoEstrelas);
+			animacao.novoSprite(fundoNuvens);
+			animacao.ligar();
+	}
+
+	</script>
+</body>
+</html>

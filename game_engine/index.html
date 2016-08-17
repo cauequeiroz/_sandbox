@@ -9,59 +9,70 @@
 	<script src="spritesheet.js"></script>
 	<script src="sonic.js"></script>
 	<script src="colisor.js"></script>
+	<script src="spaceship.js"></script>
+	<script src="bullet.js"></script>
+	<script src="background.js"></script>
 	<style>
 		body { text-align: center; background: #ecf0f1; }
 		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
 	</style>
 </head>
 <body>
-	<canvas id="canvas" width="500" height="300"></canvas>
+	<canvas id="canvas" width="500" height="500"></canvas>
 	<script>
+
+	var spaceship_img = new Image();
+		spaceship_img.src = 'nave.png';
+		spaceship_img.onload = loading;
+
+	var imgSpace = new Image();
+		imgSpace.src = 'fundo-espaco.png';
+		imgSpace.onload = loading;
+	var imgStars = new Image();
+		imgStars.src = 'fundo-estrelas.png';
+		imgStars.onload = loading;
+	var imgCloud = new Image();
+		imgCloud.src = 'fundo-nuvens.png';
+		imgCloud.onload = loading;
+
+	var loaded = 0,
+		total = 4;
+	function loading() {
+		loaded++;
+		if ( loaded === total ) startGame();
+	}
+
+	function startGame() {
 		// Get canvas and set context
 		var canvas = document.getElementById('canvas'),
 			ctx = canvas.getContext('2d');
 
-		// Create some sprites
-		var ball = new Ball(ctx);
-			ball.x = 100;
-			ball.y = 100;
-			ball.speedX = 10;
-			ball.speedY = -5;
-			ball.radius = 20;
-			ball.color = '#3498db';
+		// Import classes
+		var animation = new Animation(ctx),
+			keyboard  = new Keyboard(document);
 
-		var ball2 = new Ball(ctx);
-			ball2.x = 200;
-			ball2.y = 200;
-			ball2.speedX = -8;
-			ball2.speedY = 10;
-			ball2.radius = 32;
-			ball2.color = '#f39c12';
+		// Create background
+		var bgSpace = new Background(ctx, imgSpace),
+			bgStars = new Background(ctx, imgStars),
+			bgCloud = new Background(ctx, imgCloud);
 
-		// Create collision
-		var collision = new Collision();
-			collision.addSprite(ball);
-			collision.addSprite(ball2);
+		bgSpace.speed = 3;
+		bgStars.speed = 7;
+		bgCloud.speed = 10;
+		animation.addSprite(bgSpace);
+		animation.addSprite(bgStars);
+		animation.addSprite(bgCloud);
 
-			collision.anyCollision = function(s1, s2) {
-				console.log('caue');
-			}
+		// Create spaceship
+		var spaceship = new Spaceship(ctx, keyboard, spaceship_img);
+		animation.addSprite(spaceship);
+		keyboard.tap(KEY_SPACE, function() {
+			spaceship.shot();
+		})
 
-		// Game loop
-		requestAnimationFrame(loop);
-		function loop() {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-			ball.update();
-			ball2.update();
-
-			ball.draw();
-			ball2.draw();
-
-			collision.process();
-
-			requestAnimationFrame(loop);
-		}
+		// Animation loop
+		animation.start();
+	}		
 	</script>
 </body>
 </html>
