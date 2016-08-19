@@ -1,10 +1,15 @@
 function Collision() {
 	this.sprites = [];
 	this.anyCollision = null;
+	this.spritesDel = [];
 }
 Collision.prototype = {
 	addSprite: function(sprite) {
 		this.sprites.push(sprite);
+		sprite.collision = this;
+	},
+	deleteSprite: function(sprite) {
+		this.spritesDel.push(sprite);
 	},
 	process: function() {
 		var tested = new Object();
@@ -27,6 +32,20 @@ Collision.prototype = {
 				}				
 			}
 		}
+
+		this.processExclusions();
+	},
+	processExclusions: function() {
+		var newSprite = [];
+
+		for ( var i in this.sprites ) {
+			if ( this.spritesDel.indexOf(this.sprites[i]) == -1 ) {
+				newSprite.push(this.sprites[i]);
+			}
+		}
+
+		this.spritesDel = [];
+		this.sprites = newSprite;
 	},
 	testCollision: function(sprite1, sprite2) {
 		var rects1 = sprite1.getRects(),
@@ -62,5 +81,7 @@ Collision.prototype = {
 			       'w:'+rects[i].width+','+
 			       'h:'+rects[i].height+'\n';
 		}
+
+		return str;
 	}
 }

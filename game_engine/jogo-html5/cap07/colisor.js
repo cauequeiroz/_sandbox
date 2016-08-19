@@ -1,10 +1,15 @@
 function Colisor() {
 	this.sprites = [];
 	this.aoColidir = null;
+	this.spritesExcluir = [];
 }
 Colisor.prototype = {
 	novoSprite: function(sprite) {
 		this.sprites.push(sprite);
+		sprite.colisor = this;
+	},
+	excluirSprite: function(sprite) {
+		this.spritesExcluir.push(sprite);
 	},
 	processar: function() {
 		var jaTestados = new Object();
@@ -28,6 +33,20 @@ Colisor.prototype = {
 				}				
 			}
 		}
+
+		this.processarExclusoes();
+	},
+	processarExclusoes: function() {
+		var novoArray = [];
+
+		for ( var i in this.sprites ) {
+			if ( this.spritesExcluir.indexOf(this.sprites[i]) == -1 ) {
+				novoArray.push(this.sprites[i]);
+			}
+		}
+
+		this.spritesExcluir = [];
+		this.sprites = novoArray;
 	},
 	testarColisao: function(sprite1, sprite2) {
 		var rets1 = sprite1.retangulosColisao(),

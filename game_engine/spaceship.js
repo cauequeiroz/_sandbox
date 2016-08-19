@@ -31,5 +31,29 @@ Spaceship.prototype = {
 	shot: function() {
 		var bullet = new Bullet(this.ctx, this);
 		this.animation.addSprite(bullet);
+		this.collision.addSprite(bullet);
+	},
+	getRects: function() {
+		var rects = [
+			{x:this.x+2, y:this.y+19, width:9, height:13},
+			{x:this.x+13, y:this.y+3, width:10, height:33},
+			{x:this.x+25, y:this.y+19, width:9, height:13}
+		];
+
+		// for ( var i in rects ) {
+		// 	var ctx = this.ctx;
+		// 	ctx.save();
+		// 	ctx.strokeStyle = 'yellow';
+		// 	ctx.strokeRect(rects[i].x,rects[i].y,rects[i].width,rects[i].height);
+		// 	ctx.restore()
+		// }
+
+		return rects;
+	},
+	collidedWith: function(other) {
+		if ( other instanceof Ovni ) {
+			this.animation.stop();
+			alert('game over');
+		}
 	}
 }

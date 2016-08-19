@@ -76,6 +76,11 @@
 			spaceship.shot();
 		})
 
+		var collision = new Collision();
+			collision.addSprite(spaceship);
+
+		animation.addProcess(collision);
+
 		// Animation loop
 		animation.start();
 
@@ -87,6 +92,7 @@
 				ovni.speed = Math.floor(5 + Math.random() * ( 20 - 5 + 1 ));
 
 			animation.addSprite(ovni);
+			collision.addSprite(ovni);
 		}
 	}		
 	</script>
