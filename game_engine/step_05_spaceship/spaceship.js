@@ -5,7 +5,7 @@ function Spaceship(context, keyboard, img) {
 
 	this.x = 0;
 	this.y = 0;
-	this.speed = 5;
+	this.speed = 10;
 }
 Spaceship.prototype = {
 	update: function() {

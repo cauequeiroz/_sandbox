@@ -12,7 +12,6 @@
 	<script src="spaceship.js"></script>
 	<script src="bullet.js"></script>
 	<script src="background.js"></script>
-	<script src="ovni.js"></script>
 	<style>
 		body { text-align: center; background: #ecf0f1; }
 		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
@@ -25,9 +24,6 @@
 	var spaceship_img = new Image();
 		spaceship_img.src = 'nave.png';
 		spaceship_img.onload = loading;
-	var ovni_img = new Image();
-		ovni_img.src = 'ovni.png';
-		ovni_img.onload = loading;
 
 	var imgSpace = new Image();
 		imgSpace.src = 'fundo-espaco.png';
@@ -40,7 +36,7 @@
 		imgCloud.onload = loading;
 
 	var loaded = 0,
-		total = 5;
+		total = 4;
 	function loading() {
 		loaded++;
 		if ( loaded === total ) startGame();
@@ -78,16 +74,6 @@
 
 		// Animation loop
 		animation.start();
-
-		setInterval(generateEnemy, 1000);
-		function generateEnemy() {
-			var ovni = new Ovni(ctx, ovni_img);
-				ovni.x = Math.floor(Math.random() * (canvas.width - ovni_img.width + 1) );
-				ovni.y = -ovni_img.height;
-				ovni.speed = Math.floor(5 + Math.random() * ( 20 - 5 + 1 ));
-
-			animation.addSprite(ovni);
-		}
 	}		
 	</script>
 </body>

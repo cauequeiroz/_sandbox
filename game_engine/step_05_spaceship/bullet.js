@@ -3,7 +3,7 @@ function Bullet(ctx, spaceship) {
 
 	this.width = 5;
 	this.height = 20;
-	this.speed = 10;
+	this.speed = 20;
 	this.color = '#e74c3c';
 	this.x = spaceship.x + spaceship.img.width / 2 - this.width;
 	this.y = spaceship.y - this.height;
