@@ -6,8 +6,6 @@ function Animation(ctx) {
 	this.processList = [];
 	this.spritesDel = [];
 	this.processListDel = [];
-	this.lastCicle = 0;
-	this.timeDifference = 0;
 }
 Animation.prototype = {
 	start: function() {
@@ -30,9 +28,7 @@ Animation.prototype = {
 	nextFrame: function() {
 		if ( !this.play ) return;
 
-		var now = new Date().getTime();
-		if ( this.lastCicle == 0 ) this.lastCicle = now;
-		this.timeDifference = now - this.lastCicle;
+		// this.clearCanvas();
 
 		for ( var i in this.sprites )
 			this.sprites[i].update();
@@ -42,8 +38,6 @@ Animation.prototype = {
 			this.processList[i].process();
 
 		this.processExclusions();
-
-		this.lastCicle = now;
 
 		var $this = this;
 		requestAnimationFrame(function() {

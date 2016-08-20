@@ -8,7 +8,7 @@ function Ovni(context, img) {
 }
 Ovni.prototype = {
 	update: function() {
-		this.y += this.speed * this.animation.timeDifference / 1000;
+		this.y += this.speed;
 
 		if ( this.y > this.ctx.canvas.height ) {
 			this.animation.deleteSprite(this);

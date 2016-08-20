@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HTML5 Game Engine</title>
+	<script src="ball.js"></script>
+	<script src="animation.js"></script>
+	<script src="hero.js"></script>
+	<script src="keyboard.js"></script>
+	<script src="spritesheet.js"></script>
+	<script src="sonic.js"></script>
+	<script src="colisor.js"></script>
+	<script src="spaceship.js"></script>
+	<script src="bullet.js"></script>
+	<script src="background.js"></script>
+	<script src="ovni.js"></script>
+	<style>
+		body { text-align: center; background: #ecf0f1; }
+		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<script>
+
+	var spaceship_img = new Image();
+		spaceship_img.src = 'nave.png';
+		spaceship_img.onload = loading;
+	var ovni_img = new Image();
+		ovni_img.src = 'ovni.png';
+		ovni_img.onload = loading;
+
+	var imgSpace = new Image();
+		imgSpace.src = 'fundo-espaco.png';
+		imgSpace.onload = loading;
+	var imgStars = new Image();
+		imgStars.src = 'fundo-estrelas.png';
+		imgStars.onload = loading;
+	var imgCloud = new Image();
+		imgCloud.src = 'fundo-nuvens.png';
+		imgCloud.onload = loading;
+
+	var loaded = 0,
+		total = 5;
+	function loading() {
+		loaded++;
+		if ( loaded === total ) startGame();
+	}
+
+	function startGame() {
+		// Get canvas and set context
+		var canvas = document.getElementById('canvas'),
+			ctx = canvas.getContext('2d');
+
+		// Import classes
+		var animation = new Animation(ctx),
+			keyboard  = new Keyboard(document);
+
+		// Create background
+		var bgSpace = new Background(ctx, imgSpace),
+			bgStars = new Background(ctx, imgStars),
+			bgCloud = new Background(ctx, imgCloud);
+
+		bgSpace.speed = 3;
+		bgStars.speed = 7;
+		bgCloud.speed = 10;
+		animation.addSprite(bgSpace);
+		animation.addSprite(bgStars);
+		animation.addSprite(bgCloud);
+
+		// Create spaceship
+		var spaceship = new Spaceship(ctx, keyboard, spaceship_img);
+			spaceship.x = canvas.width / 2 - spaceship_img.width/2;
+			spaceship.y = canvas.height - spaceship_img.height;
+		animation.addSprite(spaceship);
+		keyboard.tap(KEY_SPACE, function() {
+			spaceship.shot();
+		})
+
+		var collision = new Collision();
+			collision.addSprite(spaceship);
+
+		animation.addProcess(collision);
+
+		// Animation loop
+		animation.start();
+
+		setInterval(generateEnemy, 1000);
+		function generateEnemy() {
+			var ovni = new Ovni(ctx, ovni_img);
+				ovni.x = Math.floor(Math.random() * (canvas.width - ovni_img.width + 1) );
+				ovni.y = -ovni_img.height;
+				ovni.speed = Math.floor(5 + Math.random() * ( 20 - 5 + 1 ));
+
+			animation.addSprite(ovni);
+			collision.addSprite(ovni);
+		}
+	}		
+	</script>
+</body>
+</html>

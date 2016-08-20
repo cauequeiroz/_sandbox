@@ -9,20 +9,19 @@ function Spaceship(context, keyboard, img) {
 }
 Spaceship.prototype = {
 	update: function() {
-		var increment = this.speed * this.animation.timeDifference / 1000;
 		if ( this.keyboard.pressed(KEY_LEFT) && this.x > 0 ) {
-			this.x -= increment;
+			this.x -= this.speed;
 		}
 		if ( this.keyboard.pressed(KEY_RIGHT) &&
 			 this.x < this.ctx.canvas.width - this.img.width ) {
-			this.x += increment;
+			this.x += this.speed;
 		}
 		if ( this.keyboard.pressed(KEY_UP) && this.y > 0 ) {
-			this.y -= increment;
+			this.y -= this.speed;
 		}
 		if ( this.keyboard.pressed(KEY_DOWN) &&
 		     this.y < this.ctx.canvas.height - this.img.height ) {
-			this.y += increment;
+			this.y += this.speed;
 		}			
 	},
 	draw: function() {

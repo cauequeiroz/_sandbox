@@ -8,7 +8,7 @@ function Background(context, img) {
 }
 Background.prototype = {
 	update: function() {
-		this.division += this.speed * this.animation.timeDifference / 1000;
+		this.division += this.speed;
 
 		if ( this.division > this.img.height )
 			this.division = 0;
