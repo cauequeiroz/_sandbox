@@ -1,3 +1,8 @@
+var soundExplosion = new Audio();
+	soundExplosion.src = 'explosao.mp3';
+	soundExplosion.volume = 0.4;
+	soundExplosion.load();
+
 function Explosion(context, img, x, y) {
 	this.ctx = context;
 	this.img = img;
@@ -13,6 +18,9 @@ function Explosion(context, img, x, y) {
 		$this.animation.deleteSprite($this);
 		if ( $this.end ) $this.end();
 	}
+
+	soundExplosion.currentTime = 0.0;
+	soundExplosion.play();
 }
 Explosion.prototype = {
 	update: function() {

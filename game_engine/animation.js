@@ -11,6 +11,7 @@ function Animation(ctx) {
 }
 Animation.prototype = {
 	start: function() {
+		this.lastCicle = 0;
 		this.play = true;
 		this.nextFrame();
 	},

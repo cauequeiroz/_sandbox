@@ -31,11 +31,13 @@
 			colisor,
 			nave,
 			criadorInimigos,
+			musicaAcao,
 			totalImagens = 0,
 			carregadas = 0;
 
 		// Step 01: Carregar imagens
 		carregarImagens();
+		carregarMusicas();
 		function carregarImagens() {
 			imagens = {
 				espaco:   'fundo-espaco.png',
@@ -54,6 +56,14 @@
 
 				imagens[i] = img;
 			}
+		}
+		function carregarMusicas() {
+			musicaAcao = new Audio();
+			musicaAcao.src = 'snd/musica-acao.mp3';
+			musicaAcao.load();
+			musicaAcao.volume = 0.8;
+			musicaAcao.loop = true;
+			musicaAcao.play();
 		}
 		function carregando() {
 			carregadas++;
@@ -96,9 +106,36 @@
 			nave.velocidade = 200;
 
 			// Tiro
-			teclado.disparou(ESPACO, function() {
-				nave.atirar();
-			});
+			function ativarTiro(s) {
+				if ( s ) {
+					teclado.disparou(ESPACO, function() {
+						nave.atirar();
+					});		
+				} else {
+					teclado.disparou(ESPACO, null);
+				}
+			}
+			ativarTiro(true);			
+
+			function pausarJogo() {
+				if ( animacao.ligado ) {
+					animacao.desligar();
+					ativarTiro(false);
+
+					context.save();
+					context.fillStyle = 'white';
+					context.strokeStyle = 'black';
+					context.font = '50px sans-serif';
+					context.fillText("Pausado", 160, 200);
+					context.strokeText("Pausado", 160, 200);
+					context.restore();
+				} else {
+					criadorInimigos.ultimoOvni = new Date().getTime();
+					animacao.ligar();
+					ativarTiro(true);
+				}
+			}
+			teclado.disparou(ENTER, pausarJogo);
 
 			animacao.ligar();
 

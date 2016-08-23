@@ -1,3 +1,8 @@
+var sound = new Audio();
+	sound.src = 'tiro.mp3';
+	sound.volume = 0.2;
+	sound.load();
+
 function Bullet(ctx, spaceship) {
 	this.ctx = ctx;
 
@@ -7,6 +12,9 @@ function Bullet(ctx, spaceship) {
 	this.color = 'yellow';
 	this.x = spaceship.x + 18 - this.width / 2;
 	this.y = spaceship.y - this.height;
+
+	sound.currentTime = 0.0;
+	sound.play();
 }
 Bullet.prototype = {
 	update: function() {

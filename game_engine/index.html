@@ -38,11 +38,13 @@
 			spaceship,
 			ovni,
 			generateOvni,
+			backgroundMusic,
 			total  = 0,
 			loaded = 0;
 
 		// Load images
 		loadImages();
+		loadMusic();
 		function loadImages() {
 			images = {
 				space: 'fundo-espaco.png',
@@ -62,6 +64,14 @@
 
 				images[i] = img;
 			}
+		}
+		function loadMusic() {
+			backgroundMusic = new Audio();
+			backgroundMusic.src = 'musica-acao.mp3';
+			backgroundMusic.load();
+			backgroundMusic.volume = 0.8;
+			backgroundMusic.loop = true;
+			backgroundMusic.play();
 		}
 		function loading() {
 			loaded++;
@@ -99,8 +109,36 @@
 			spaceship.y = canvas.height - 48;
 			spaceship.speed = 200;
 
-			keyboard.tap(KEY_SPACE, function() {
-				spaceship.shot();
+			function spaceshipShot(can) {
+				if ( can ) {
+					keyboard.tap(KEY_SPACE, function() {
+						spaceship.shot();
+					});		
+				} else {
+					keyboard.tap(KEY_SPACE, null);
+				}
+			}
+			spaceshipShot(true);
+			
+			keyboard.tap(KEY_ENTER, function() {
+				if ( animation.play ) {
+					animation.stop();
+					spaceshipShot(false);
+					backgroundMusic.pause();
+
+					ctx.save();
+					ctx.fillStyle = 'white';
+					ctx.strokeStyle = 'black';
+					ctx.font = '50px sans-serif';
+					ctx.fillText('Paused', 180, 250);
+					ctx.strokeText('Paused', 180, 250);
+					ctx.restore();
+				} else {
+					generateOvni.last_time = new Date().getTime();
+					animation.start();
+					spaceshipShot(true);
+					backgroundMusic.play();
+				}
 			});
 
 			animation.start();

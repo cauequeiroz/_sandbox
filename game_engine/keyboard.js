@@ -2,7 +2,8 @@ var KEY_LEFT  = 37,
 	KEY_RIGHT = 39,
 	KEY_UP = 38,
 	KEY_DOWN = 40,
-	KEY_SPACE = 32;
+	KEY_SPACE = 32,
+	KEY_ENTER = 13;
 
 function Keyboard(element) {
 	this.key_press = [];

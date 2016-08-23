@@ -1,3 +1,8 @@
+var SOM_TIRO = new Audio();
+	SOM_TIRO.src = 'snd/tiro.mp3';
+	SOM_TIRO.volume = 0.2;
+	SOM_TIRO.load();
+
 function Tiro(context, nave) {
 	this.context = context;
 	this.nave = nave;
@@ -8,6 +13,9 @@ function Tiro(context, nave) {
 	this.y = nave.y - this.altura;
 	this.velocidade = 400;
 	this.cor = 'yellow';
+
+	SOM_TIRO.currentTime = 0.0;
+	SOM_TIRO.play();
 }
 Tiro.prototype = {
 	atualizar: function() {
