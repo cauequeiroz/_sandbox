@@ -7,6 +7,7 @@ function Spritesheet(ctx, image, row, col) {
 	this.row = 0;
 	this.col = 0;
 	this.interval = 41;
+	this.end = null;
 }
 Spritesheet.prototype = {
 	nextFrame: function() {
@@ -14,10 +15,13 @@ Spritesheet.prototype = {
 		if ( !this.last_time ) this.last_time = now;
 		if ( now - this.last_time < this.interval ) return;
 
-		if ( this.col < this.n_col - 1 )
+		if ( this.col < this.n_col - 1 ) {
 			this.col++;
-		else
+		}
+		else {
 			this.col = 0;
+			if ( this.end ) this.end();
+		}
 
 		this.last_time = now;
 	},

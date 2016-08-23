@@ -1,6 +1,7 @@
-function Ovni(context, img) {
+function Ovni(context, img, imgExplosion) {
 	this.ctx = context;
 	this.img = img;
+	this.imgExplosion = imgExplosion;
 
 	this.x = 0;
 	this.y = 0;
@@ -41,6 +42,9 @@ Ovni.prototype = {
 			this.collision.deleteSprite(this);
 			this.animation.deleteSprite(other);
 			this.collision.deleteSprite(other);
+
+			var explosion = new Explosion(this.ctx, this.imgExplosion, this.x, this.y);
+			this.animation.addSprite(explosion);
 		}
 	}
 }

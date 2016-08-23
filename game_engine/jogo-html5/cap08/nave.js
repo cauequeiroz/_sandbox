@@ -1,7 +1,8 @@
-function Nave(context, teclado, imagem) {
+function Nave(context, teclado, imagem, explosao) {
 	this.context = context;
 	this.imagem = imagem;
 	this.teclado = teclado;
+	this.imgExplosao = explosao;
 
 	this.x = 0;
 	this.y = 0;
@@ -67,8 +68,21 @@ Nave.prototype = {
 	},
 	colidiuCom: function(outro) {
 		if ( outro instanceof Ovni ) {
-			this.animacao.desligar();
-			alert('game over!');
+			this.animacao.excluirSprite(this);
+			this.colisor.excluirSprite(this);
+			this.animacao.excluirSprite(outro);
+			this.colisor.excluirSprite(outro);
+
+			var exp1= new Explosao(this.context, this.imgExplosao, this.x, this.y),
+				exp2= new Explosao(this.context, this.imgExplosao, outro.x, outro.y);
+
+			this.animacao.novoSprite(exp1);
+			this.animacao.novoSprite(exp2);
+
+			exp1.fimDaExplosao = function() {
+				animacao.desligar();
+				alert('Game over!');
+			}
 		}
 	}
 }

@@ -6,6 +6,7 @@ function Spritesheet(context, imagem, linhas, colunas) {
 	this.linha = 0;
 	this.coluna = 0;
 	this.intervalo = 0;
+	this.fimDoCiclo = null;
 }
 Spritesheet.prototype = {
 	proximoQuadro: function() {
@@ -13,10 +14,14 @@ Spritesheet.prototype = {
 		if ( !this.last_time ) this.last_time = agora;
 		if ( agora - this.last_time < this.intervalo ) return;
 
-		if ( this.coluna < this.numColunas - 1 )
+		if ( this.coluna < this.numColunas - 1 ) {
 			this.coluna++;
-		else
+		}
+		else {
 			this.coluna = 0;
+
+			if ( this.fimDoCiclo ) this.fimDoCiclo();
+		}
 
 		this.last_time = agora;
 	},

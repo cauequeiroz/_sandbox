@@ -13,6 +13,7 @@
 	<script src="bullet.js"></script>
 	<script src="background.js"></script>
 	<script src="ovni.js"></script>
+	<script src="explosion.js"></script>
 	<style>
 		body { text-align: center; background: #ecf0f1; }
 		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
@@ -47,8 +48,9 @@
 				space: 'fundo-espaco.png',
 				stars: 'fundo-estrelas.png',
 				cloud: 'fundo-nuvens.png',
-				spaceship: 'nave.png',
-				ovni: 'ovni.png'
+				spaceship: 'nave-spritesheet.png',
+				ovni: 'ovni.png',
+				explosion: 'explosao.png'
 			}
 
 			for ( var i in images ) {
@@ -74,7 +76,7 @@
 			bg1       = new Background(ctx, images.space);
 			bg2       = new Background(ctx, images.stars);
 			bg3       = new Background(ctx, images.cloud);
-			spaceship = new Spaceship(ctx, keyboard, images.spaceship);
+			spaceship = new Spaceship(ctx, keyboard, images.spaceship, images.explosion);
 
 			animation.addSprite(bg1);
 			animation.addSprite(bg2);
@@ -93,8 +95,8 @@
 			bg2.speed = 150;
 			bg3.speed = 500;
 
-			spaceship.x = canvas.width/2 - images.spaceship.width/2;
-			spaceship.y = canvas.height - images.spaceship.height;
+			spaceship.x = canvas.width/2 - 18;
+			spaceship.y = canvas.height - 48;
 			spaceship.speed = 200;
 
 			keyboard.tap(KEY_SPACE, function() {
@@ -122,7 +124,7 @@
 			animation.addProcess(generateOvni);
 		}
 		function newOvni() {
-			var ovni = new Ovni(ctx, images.ovni);
+			var ovni = new Ovni(ctx, images.ovni, images.explosion);
 				ovni.x = Math.floor(Math.random() * ( canvas.width - images.ovni.width + 1 ));
 				ovni.y = -images.ovni.height;
 				ovni.speed = Math.floor(200 + Math.random() * (800 - 200 + 1));

@@ -1,11 +1,15 @@
-function Spaceship(context, keyboard, img) {
+function Spaceship(context, keyboard, img, imgExplosion) {
 	this.ctx = context;
 	this.keyboard = keyboard;
 	this.img = img;
+	this.imgExplosion = imgExplosion;
 
 	this.x = 0;
 	this.y = 0;
 	this.speed = 5;
+	this.spritesheet = new Spritesheet(this.ctx, this.img, 3, 2);
+	this.spritesheet.row = 0;
+	this.spritesheet.interval = 100;
 }
 Spaceship.prototype = {
 	update: function() {
@@ -14,20 +18,30 @@ Spaceship.prototype = {
 			this.x -= increment;
 		}
 		if ( this.keyboard.pressed(KEY_RIGHT) &&
-			 this.x < this.ctx.canvas.width - this.img.width ) {
+			 this.x < this.ctx.canvas.width - 36 ) {
 			this.x += increment;
 		}
 		if ( this.keyboard.pressed(KEY_UP) && this.y > 0 ) {
 			this.y -= increment;
 		}
 		if ( this.keyboard.pressed(KEY_DOWN) &&
-		     this.y < this.ctx.canvas.height - this.img.height ) {
+		     this.y < this.ctx.canvas.height - 48 ) {
 			this.y += increment;
 		}			
 	},
 	draw: function() {
-		var img = this.img;
-		this.ctx.drawImage(img, this.x, this.y, img.width, img.height)
+		if ( this.keyboard.pressed(KEY_LEFT) ) {
+			this.spritesheet.row = 1;
+		}
+		else if ( this.keyboard.pressed(KEY_RIGHT) ) {
+			this.spritesheet.row = 2;
+		}
+		else {
+			this.spritesheet.row = 0;
+		}
+
+		this.spritesheet.draw(this.x, this.y);
+		this.spritesheet.nextFrame();
 	},
 	shot: function() {
 		var bullet = new Bullet(this.ctx, this);
@@ -53,8 +67,21 @@ Spaceship.prototype = {
 	},
 	collidedWith: function(other) {
 		if ( other instanceof Ovni ) {
-			this.animation.stop();
-			alert('game over');
+			this.animation.deleteSprite(this);
+			this.collision.deleteSprite(this);
+			this.animation.deleteSprite(other);
+			this.collision.deleteSprite(other);
+
+			var exp1 = new Explosion(this.ctx, this.imgExplosion, this.x, this.y),
+				exp2 = new Explosion(this.ctx, this.imgExplosion, other.x, other.y);
+
+			this.animation.addSprite(exp1);
+			this.animation.addSprite(exp2);
+
+			exp1.end = function() {
+				animation.stop();
+				console.log('Game over!');
+			}
 		}
 	}
 }

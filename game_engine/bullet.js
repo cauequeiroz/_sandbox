@@ -1,11 +1,11 @@
 function Bullet(ctx, spaceship) {
 	this.ctx = ctx;
 
-	this.width = 5;
-	this.height = 20;
+	this.width = 3;
+	this.height = 10;
 	this.speed = 400;
-	this.color = '#e74c3c';
-	this.x = spaceship.x + spaceship.img.width / 2 - this.width;
+	this.color = 'yellow';
+	this.x = spaceship.x + 18 - this.width / 2;
 	this.y = spaceship.y - this.height;
 }
 Bullet.prototype = {
