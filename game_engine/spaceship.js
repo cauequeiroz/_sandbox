@@ -10,6 +10,8 @@ function Spaceship(context, keyboard, img, imgExplosion) {
 	this.spritesheet = new Spritesheet(this.ctx, this.img, 3, 2);
 	this.spritesheet.row = 0;
 	this.spritesheet.interval = 100;
+	this.endLife = null;
+	this.lifes = 3;
 }
 Spaceship.prototype = {
 	update: function() {
@@ -78,10 +80,22 @@ Spaceship.prototype = {
 			this.animation.addSprite(exp1);
 			this.animation.addSprite(exp2);
 
+			var $this = this;
 			exp1.end = function() {
-				animation.stop();
-				console.log('Game over!');
+				$this.lifes--;
+
+				if ( $this.lifes < 0 ) {
+					if ( $this.endLife ) $this.endLife();
+				} else {
+					$this.setPlace();
+					$this.animation.addSprite($this);
+					$this.collision.addSprite($this);
+				}
 			}
 		}
+	},
+	setPlace: function() {
+		this.x = canvas.width/2 - 18;
+		this.y = canvas.height - 48;
 	}
 }

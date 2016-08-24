@@ -14,13 +14,30 @@
 	<script src="background.js"></script>
 	<script src="ovni.js"></script>
 	<script src="explosion.js"></script>
+	<script src="panel.js"></script>
 	<style>
 		body { text-align: center; background: #ecf0f1; }
 		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
+		#playButton {
+			display: none;
+			color: yellow;
+			background: url('botao-jogar.png');
+			font-size: 20px;
+			font-family: sans-serif;
+			text-decoration: none;
+			text-shadow: 2px 2px 5px black;
+			position: absolute;
+			left: 50%;
+			top: 440px;
+			width: 52px;
+			height: 26px;
+			padding: 23px 10px;
+		}
 	</style>
 </head>
 <body>
 	<canvas id="canvas" width="500" height="500"></canvas>
+	<a id="playButton" href="javascript: startGame()">Play</a>
 	<script>
 
 		// get canvas and set context
@@ -71,11 +88,29 @@
 			backgroundMusic.load();
 			backgroundMusic.volume = 0.8;
 			backgroundMusic.loop = true;
-			backgroundMusic.play();
 		}
 		function loading() {
 			loaded++;
-			if ( loaded == total ) init();
+
+			ctx.save();
+			ctx.drawImage(images.space, 0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = 'white';
+			ctx.strokeStyle = 'black';
+			ctx.font = '50px sans-serif';
+			ctx.fillText('Loading...', 150, 250);
+			ctx.strokeText('Loading...', 150, 250);
+
+			var widthTotal = 300,	
+				widthCurrent = loaded / total * widthTotal;
+			ctx.fillStyle = 'yellow';
+			ctx.fillRect(110, 300, widthCurrent, 10);
+
+			ctx.restore();
+
+			if ( loaded == total ) {
+				init();
+				showButton();
+			}
 		}
 
 		// Init
@@ -87,10 +122,12 @@
 			bg2       = new Background(ctx, images.stars);
 			bg3       = new Background(ctx, images.cloud);
 			spaceship = new Spaceship(ctx, keyboard, images.spaceship, images.explosion);
+			panel     = new Panel(ctx, spaceship);
 
 			animation.addSprite(bg1);
 			animation.addSprite(bg2);
 			animation.addSprite(bg3);
+			animation.addSprite(panel);
 			animation.addSprite(spaceship);
 
 			animation.addProcess(collision);
@@ -105,43 +142,19 @@
 			bg2.speed = 150;
 			bg3.speed = 500;
 
-			spaceship.x = canvas.width/2 - 18;
-			spaceship.y = canvas.height - 48;
+			spaceship.setPlace();
 			spaceship.speed = 200;
+			spaceship.endLife = function() {
+				animation.stop();
+				alert('Game Over!');
+			}
 
-			function spaceshipShot(can) {
-				if ( can ) {
-					keyboard.tap(KEY_SPACE, function() {
-						spaceship.shot();
-					});		
-				} else {
-					keyboard.tap(KEY_SPACE, null);
+			collision.anyCollision = function(s1, s2) {
+				if ( (s1 instanceof Ovni && s2 instanceof Bullet) ||
+				     (s1 instanceof Bullet && s2 instanceof Ovni ) ) {
+					panel.score += 20;
 				}
 			}
-			spaceshipShot(true);
-			
-			keyboard.tap(KEY_ENTER, function() {
-				if ( animation.play ) {
-					animation.stop();
-					spaceshipShot(false);
-					backgroundMusic.pause();
-
-					ctx.save();
-					ctx.fillStyle = 'white';
-					ctx.strokeStyle = 'black';
-					ctx.font = '50px sans-serif';
-					ctx.fillText('Paused', 180, 250);
-					ctx.strokeText('Paused', 180, 250);
-					ctx.restore();
-				} else {
-					generateOvni.last_time = new Date().getTime();
-					animation.start();
-					spaceshipShot(true);
-					backgroundMusic.play();
-				}
-			});
-
-			animation.start();
 
 			generateEnemy();
 		}
@@ -169,6 +182,49 @@
 
 			animation.addSprite(ovni);
 			collision.addSprite(ovni);
+		}
+
+		function spaceshipShot(can) {
+			if ( can ) {
+				keyboard.tap(KEY_SPACE, function() {
+					spaceship.shot();
+				});		
+			} else {
+				keyboard.tap(KEY_SPACE, null);
+			}
+		}
+		
+		function pauseGame() {
+			if ( animation.play ) {
+				animation.stop();
+				spaceshipShot(false);
+				backgroundMusic.pause();
+
+				ctx.save();
+				ctx.fillStyle = 'white';
+				ctx.strokeStyle = 'black';
+				ctx.font = '50px sans-serif';
+				ctx.fillText('Paused', 180, 250);
+				ctx.strokeText('Paused', 180, 250);
+				ctx.restore();
+			} else {
+				generateOvni.last_time = new Date().getTime();
+				animation.start();
+				spaceshipShot(true);
+				backgroundMusic.play();
+			}
+		}
+
+		function showButton() {
+			document.getElementById('playButton').style.display = 'block';
+		}
+
+		function startGame() {
+			document.getElementById('playButton').style.display = 'none';
+			animation.start();
+			spaceshipShot(true);
+			keyboard.tap(KEY_ENTER, pauseGame);
+			backgroundMusic.play();
 		}
 	</script>
 </body>

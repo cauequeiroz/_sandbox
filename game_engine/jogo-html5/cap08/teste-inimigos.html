@@ -11,13 +11,30 @@
 	<script src="tiro.js"></script>	
 	<script src="spritesheet.js"></script>
 	<script src="explosao.js"></script>
+	<script src="painel.js"></script>
 	<style>
 		body { text-align: center; background: #ecf0f1; }
 		canvas { border: 1px dotted #7f8c8d; margin: 100px 0; }
+		#link_jogar {
+			display: none;
+			color: yellow;
+			background: url('img/botao-jogar.png');
+			font-size: 20px;
+			font-family: sans-serif;
+			text-decoration: none;
+			text-shadow: 2px 2px 5px black;
+			position: absolute;
+			left: 50%;
+			top: 440px;
+			width: 52px;
+			height: 26px;
+			padding: 23px 10px;
+		}
 	</style>
 </head>
 <body>
 	<canvas id="canvas" width="500" height="500"></canvas>
+	<a id="link_jogar" href="javascript: iniciarJogo()">Jogar</a>
 	<script>
 
 		// Get canvas and set context
@@ -63,11 +80,30 @@
 			musicaAcao.load();
 			musicaAcao.volume = 0.8;
 			musicaAcao.loop = true;
-			musicaAcao.play();
 		}
 		function carregando() {
+			context.save();
+			context.drawImage(imagens.espaco, 0, 0, canvas.width, canvas.height);
+			context.fillStyle = 'white';
+			context.strokeStyle = 'black';
+			context.font = '50px sans-serif';
+			context.fillText("Carregando...", 100, 180);
+			context.strokeText("Carregando...", 100, 180);
+			context.restore();
+
 			carregadas++;
-			if ( carregadas == totalImagens ) iniciarObjetos();
+			var tamanhoTotal = 300,
+				tamanho = carregadas / totalImagens * tamanhoTotal;
+			context.fillStyle = 'yellow';
+			context.fillRect(100, 250, tamanho, 50);
+
+			if ( carregadas == totalImagens ) {
+				iniciarObjetos();
+				mostrarLinkJogar();
+			}
+		}
+		function mostrarLinkJogar() {
+			document.getElementById('link_jogar').style.display = 'block';
 		}
 
 		// Step 02: Iniciar objetos
@@ -80,11 +116,13 @@
 			estrelas = new Fundo(context, imagens.estrelas);
 			nuvens   = new Fundo(context, imagens.nuvens);
 			nave     = new Nave(context, teclado, imagens.nave, imagens.explosao);
+			painel   = new Painel(context, nave);
 
 			// Ligacao entre objetos
 			animacao.novoSprite(espaco);
 			animacao.novoSprite(estrelas);
 			animacao.novoSprite(nuvens);
+			animacao.novoSprite(painel);
 			animacao.novoSprite(nave);
 
 			colisor.novoSprite(nave);
@@ -101,43 +139,19 @@
 			nuvens.velocidade = 500;
 
 			// Nave
-			nave.x = canvas.width/2 - 18;
-			nave.y = canvas.height - 48;
+			nave.posicionar();
 			nave.velocidade = 200;
+			nave.acabaramVidas = function() {
+				animacao.desligar();
+				alert('game over');
+			}
 
-			// Tiro
-			function ativarTiro(s) {
-				if ( s ) {
-					teclado.disparou(ESPACO, function() {
-						nave.atirar();
-					});		
-				} else {
-					teclado.disparou(ESPACO, null);
+			colisor.aoColidir = function(s1, s2) {
+				if ( (s1 instanceof Ovni && s2 instanceof Tiro) ||
+					  (s1 instanceof Tiro && s2 instanceof Ovni) ) {
+					painel.pontuacao += 10;
 				}
 			}
-			ativarTiro(true);			
-
-			function pausarJogo() {
-				if ( animacao.ligado ) {
-					animacao.desligar();
-					ativarTiro(false);
-
-					context.save();
-					context.fillStyle = 'white';
-					context.strokeStyle = 'black';
-					context.font = '50px sans-serif';
-					context.fillText("Pausado", 160, 200);
-					context.strokeText("Pausado", 160, 200);
-					context.restore();
-				} else {
-					criadorInimigos.ultimoOvni = new Date().getTime();
-					animacao.ligar();
-					ativarTiro(true);
-				}
-			}
-			teclado.disparou(ENTER, pausarJogo);
-
-			animacao.ligar();
 
 			criacaoInimigos();
 		}
@@ -169,6 +183,44 @@
 			colisor.novoSprite(ovni);
 		}
 
+		// Tiro
+		function ativarTiro(s) {
+			if ( s ) {
+				teclado.disparou(ESPACO, function() {
+					nave.atirar();
+				});		
+			} else {
+				teclado.disparou(ESPACO, null);
+			}
+		}
+
+		function pausarJogo() {
+			if ( animacao.ligado ) {
+				animacao.desligar();
+				ativarTiro(false);
+
+				context.save();
+				context.fillStyle = 'white';
+				context.strokeStyle = 'black';
+				context.font = '50px sans-serif';
+				context.fillText("Pausado", 160, 200);
+				context.strokeText("Pausado", 160, 200);
+				context.restore();
+			} else {
+				criadorInimigos.ultimoOvni = new Date().getTime();
+				animacao.ligar();
+				ativarTiro(true);
+			}
+		}
+
+		function iniciarJogo() {
+			document.getElementById('link_jogar').style.display = 'none';	
+			musicaAcao.play();
+			animacao.ligar();
+			ativarTiro(true);	
+			teclado.disparou(ENTER, pausarJogo);
+			painel.pontuacao = 0;
+		}
 	</script>
 </body>
 </html>
