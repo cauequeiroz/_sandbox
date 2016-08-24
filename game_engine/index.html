@@ -146,7 +146,8 @@
 			spaceship.speed = 200;
 			spaceship.endLife = function() {
 				animation.stop();
-				alert('Game Over!');
+				gameOver();
+				removeEnemy();
 			}
 
 			collision.anyCollision = function(s1, s2) {
@@ -220,11 +221,43 @@
 		}
 
 		function startGame() {
+			generateOvni.last_time = new Date().getTime();
 			document.getElementById('playButton').style.display = 'none';
 			animation.start();
 			spaceshipShot(true);
 			keyboard.tap(KEY_ENTER, pauseGame);
 			backgroundMusic.play();
+		}
+
+		function gameOver() {
+			spaceshipShot(false);
+			keyboard.tap(KEY_ENTER, null);
+
+			backgroundMusic.pause();
+			backgroundMusic.currentTime = 0.0;
+
+			ctx.save();
+			ctx.drawImage(images.space, 0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = 'white';
+			ctx.strokeStyle = 'black';
+			ctx.font = '50px sans-serif';
+			ctx.fillText('Game Over!', 150, 250);
+			ctx.strokeText('Game Over!', 150, 250);
+
+			showButton();
+
+			spaceship.lifes = 3;
+			spaceship.setPlace();
+			animation.addSprite(spaceship);
+			collision.addSprite(spaceship);
+		}
+
+		function removeEnemy() {
+			for ( var i in animation.sprites ) {
+				if ( animation.sprites[i] instanceof Ovni ) {
+					animation.deleteSprite(animation.sprites[i]);
+				}
+			}
 		}
 	</script>
 </body>
