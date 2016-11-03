@@ -1,3 +1,15 @@
+* {
+    box-sizing: border-box;
+    outline: 1px solid red!important;
+}
+
+.app {
+    display: flex;
+}
+
+.screenshot {
+    max-width: 460px;
+}
 .description {
-    color: red;
+    max-width: 705px;
 }
