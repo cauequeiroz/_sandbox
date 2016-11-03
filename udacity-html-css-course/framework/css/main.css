@@ -5,7 +5,8 @@
 */
 * {
     box-sizing: border-box;
-    outline: 1px solid #ccc;
+    color: #BCBBBB;
+    font-family: Arial, sans-serif;
 }
 
 .grid {
@@ -37,4 +38,17 @@
     General styles
   ----------------------------------------
 */
+header {
+    border-bottom: 4px solid #bcbbbb;
+    margin-bottom: 20px;
+}
+header h1 {
+    text-align: right;
+}
+header p {
+    text-align: right;
+}
 
+.featured-grid {
+    text-align: center;
+}
