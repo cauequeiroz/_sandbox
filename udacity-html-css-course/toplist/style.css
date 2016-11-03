@@ -1,6 +1,14 @@
 * {
     box-sizing: border-box;
-    outline: 1px solid red!important;
+}
+
+.title {
+    background: #33bebe;
+    padding-top: 40px;
+    padding-left: 20px;
+    color: #fff;
+    font: 38px Arial, sans-serif;
+    text-transform: uppercase;
 }
 
 .app {
@@ -12,4 +20,7 @@
 }
 .description {
     max-width: 705px;
+    color: #7C8B88;
+    margin: 0 20px;
+    font: 18px Arial, sans-serif;
 }
