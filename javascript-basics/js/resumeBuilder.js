@@ -85,3 +85,48 @@ var education = {
         }
     ]
 }
+
+/*
+    ========================================
+    Core    
+    ========================================
+*/
+if ( bio['skills'].length ) {
+   $('#header').append(HTMLheaderName.replace('%data%', 'Caue Queiroz'));
+   $('#header').append(HTMLskillsStart);
+
+   for (var i in bio['skills']) {
+        var formattedSkill = HTMLskills.replace('%data%', bio['skills'][i]);
+        $('#skills').append(formattedSkill);
+   }
+}
+
+var displayWork = function() {
+    for (var i in work.jobs ) {
+        $('#workExperience').append(HTMLworkStart);
+
+        var job      = work.jobs[i],
+            employer = HTMLworkEmployer.replace('%data%', job.employer),
+            jobtitle = HTMLworkTitle.replace('%data%', job.title),
+            dates    = HTMLworkDates.replace('%data%', job.dates),
+            local    = HTMLworkLocation.replace('%data%', job.location),
+            descript = HTMLworkDescription.replace('%data%', job.description),
+
+            fullHTML = employer + jobtitle + dates + local + descript;
+
+        $('#workExperience .work-entry:last').append(fullHTML);
+    }
+}
+displayWork();
+
+$('#main').append(internationalizeButton);
+
+var inName = function(name) {
+    var first = name.split(' ')[0],
+        last  = name.split(' ')[1];
+
+    var newFirst = first[0].toUpperCase() + first.slice(1).toLowerCase();
+    var newLast  = last.toUpperCase();
+
+    return newFirst + ' ' + newLast;
+}
