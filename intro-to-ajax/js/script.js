@@ -10,14 +10,14 @@ function loadData() {
     // clear out old data before new request
     $wikiElem.text("");
     $nytElem.text("");
+    if ( $('.bgimg').length ) $('.bgimg').remove();
 
     // 1) Google Streetview
-    var user_info = $('#street').val() + ',' + $('#city').val(),
+    var user_info = $('#street').val() + ', ' + $('#city').val(),
         final_url = "http://maps.googleapis.com/maps/api/streetview?size=600x300&location=" + user_info,
         greeting  = "Do you want to live in " + user_info;
 
     // Add background image
-    if ( $('.bgimg').length ) $('.bgimg').remove();
     $body.append('<img class="bgimg" src="'+final_url+'">');
 
     // Change greetings
