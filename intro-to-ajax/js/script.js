@@ -43,9 +43,26 @@ function loadData() {
         </li>");
       });
     }).error(function() {
-      $nytHeaderElem.text('Houston, we have a problem');
+        $nytHeaderElem.text('Houston, we have a problem');
     });
 
+
+    // 3) Wikipedia
+    var wiki_url = 'https://en.wikipedia.org/w/api.php?action=opensearch&search='+ user_info;
+        wiki_url += '&format=json&callback=wikiCallback';
+
+    $.ajax({
+        url: wiki_url,
+        dataType: 'jsonp',
+        success: function( data ) {
+            for ( var i=0; i<data[1].length; i++ ) {
+                var title = data[1][i];
+                var url   = data[3][i];
+
+                $wikiElem.append('<li><a href="'+url+'">'+title+'</a></li>');
+            }
+        }
+    })
 
 
     return false;
