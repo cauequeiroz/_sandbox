@@ -30,7 +30,7 @@ function loadData() {
 
     $.getJSON(nyt_url, function( data ) {
       var articles = data.response.docs;
-      console.log(articles);
+      $nytHeaderElem.text('New York Times Articles for ' + user_info);
 
       $.each(articles, function(key, item) {
         var title = item.headline.main,
