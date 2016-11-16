@@ -43,7 +43,7 @@ function loadData() {
         </li>");
       });
     }).error(function() {
-      $nytElem.text('Houston, we have a problem');
+      $nytHeaderElem.text('Houston, we have a problem');
     });
 
 
