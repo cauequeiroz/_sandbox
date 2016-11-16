@@ -22,7 +22,6 @@ function loadData() {
 
     // Change greetings
     $greeting.text(greeting);
-    console.log('caue');
 
     // YOUR CODE GOES HERE!
 
