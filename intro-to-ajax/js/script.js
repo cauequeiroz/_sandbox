@@ -29,8 +29,8 @@ function loadData() {
         nyt_url += '?' + $.param({ 'api-key': api_key, 'fq': user_info });
 
     $.getJSON(nyt_url, function( data ) {
-      var articles = data.response.docs;
       $nytHeaderElem.text('New York Times Articles for ' + user_info);
+      var articles = data.response.docs;
 
       $.each(articles, function(key, item) {
         var title = item.headline.main,
@@ -42,6 +42,8 @@ function loadData() {
           <p>"+ text +"</p>\
         </li>");
       });
+    }).error(function() {
+      $nytElem.text('Houston, we have a problem');
     });
 
 
