@@ -23,7 +23,28 @@ function loadData() {
     // Change greetings
     $greeting.text(greeting);
 
-    // YOUR CODE GOES HERE!
+    // 2) New York Times
+    var api_key = '47590ec2c0384787ac38f9fb866e8829',
+        nyt_url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json';
+        nyt_url += '?' + $.param({ 'api-key': api_key, 'fq': user_info });
+
+    $.getJSON(nyt_url, function( data ) {
+      var articles = data.response.docs;
+      console.log(articles);
+
+      $.each(articles, function(key, item) {
+        var title = item.headline.main,
+            text  = item.lead_paragraph,
+            link  = item.web_url;
+
+        $nytElem.append("<li class='article'>\
+          <a href='"+ link +"'>"+ title +"</a>\
+          <p>"+ text +"</p>\
+        </li>");
+      });
+    });
+
+
 
     return false;
 };
