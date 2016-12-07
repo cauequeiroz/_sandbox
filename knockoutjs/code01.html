@@ -10,17 +10,28 @@
 	<h1>KnockoutJS - 01</h1>
 
 	<p>You've clicked <span data-bind="text: numberOfClicks">0</span> times.</p>
-	<button data-bind="click: registerClick">Click Me!</button>
+	<button data-bind="click: registerClick, disable: checkClicks">click me</button>
 
-
+	<p data-bind="visible: checkClicks">
+		That's too many clicks! Please stop before you wear out your fingers.
+		<button data-bind="click: resetClicks">reset clicks</button>
+	</p>
 <script>
 
 	var app = function() {
-		this.numberOfClicks = ko.observable(12);
+		this.numberOfClicks = ko.observable(0);
 
 		this.registerClick = function() {
 			this.numberOfClicks( this.numberOfClicks() + 1 );
 		};
+
+		this.resetClicks = function() {
+			this.numberOfClicks(0);
+		};
+
+		this.checkClicks = ko.computed(function() {
+			return this.numberOfClicks() >= 3;
+		}, this);
 	};
 
 	ko.applyBindings(new app());
