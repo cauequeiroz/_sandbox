@@ -7,35 +7,35 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
 </head>
 <body>
-	<h1>KnockoutJS - 01</h1>
+	<h1>KnockoutJS 01</h1>
 
-	<p>You've clicked <span data-bind="text: numberOfClicks">0</span> times.</p>
-	<button data-bind="click: registerClick, disable: checkClicks">click me</button>
+	<p>Você clicou <span data-bind="text: count"></span> vezes</p>
+	<button data-bind="click: registerClick, disable: showReset">click me</button>
 
-	<p data-bind="visible: checkClicks">
-		That's too many clicks! Please stop before you wear out your fingers.
-		<button data-bind="click: resetClicks">reset clicks</button>
+	<p data-bind="visible: showReset">
+		Você clicou demais! Reset para continuar clicando.
+		<button data-bind="click: resetClick">reset</button>
 	</p>
+
 <script>
 
-	var app = function() {
-		this.numberOfClicks = ko.observable(0);
+var app = function() {
+	this.count = ko.observable(0);
 
-		this.registerClick = function() {
-			this.numberOfClicks( this.numberOfClicks() + 1 );
-		};
+	this.showReset = ko.computed(function() {
+		return this.count() >= 5;
+	}, this);
 
-		this.resetClicks = function() {
-			this.numberOfClicks(0);
-		};
-
-		this.checkClicks = ko.computed(function() {
-			return this.numberOfClicks() >= 3;
-		}, this);
+	this.registerClick = function() {
+		this.count( this.count() + 1 );
 	};
 
-	ko.applyBindings(new app());
+	this.resetClick = function() {
+		this.count(0);
+	};
+};
 
+ko.applyBindings(new app());
 
 </script>
 </body>
