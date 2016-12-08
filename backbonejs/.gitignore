@@ -1,0 +1,5 @@
+.DS_Store
+bower_components
+# Don't save editor backup files (e.g. vim)
+*~
+

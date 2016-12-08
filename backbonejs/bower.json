@@ -1,0 +1,24 @@
+{
+  "name": "udaci-meals-backbone",
+  "homepage": "https://github.com/richardkalehoff/FEF-UdaciMeals-Backbone",
+  "authors": [
+    "Richard Kalehoff <richardkalehoff@gmail.com>"
+  ],
+  "description": "A food picker application built in Backbone.",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.2.3",
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.6"
+  }
+}
