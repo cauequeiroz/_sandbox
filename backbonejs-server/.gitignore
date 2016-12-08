@@ -1,0 +1,9 @@
+# Don't include Mac OS-specific files
+.DS_Store
+
+# No editing tempfiles either
+*~
+
+# No temp directory
+_data
+
