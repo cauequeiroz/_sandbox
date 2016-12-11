@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="newModuleQuizApp">
+  <body>
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -34,7 +34,7 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/">New Module Quiz</a>
+            <a class="navbar-brand" href="#/">Bootstrap Quiz</a>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
@@ -48,7 +48,19 @@
     </div>
 
     <div class="container">
-      <div ng-include="'views/instructions.html'"></div>
+      <div class="jumbotron">
+        <h1>Bootstrap Quiz</h1>
+        <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid! <span class="glyphicon glyphicon-ok"></span></a></p>
+      </div>
+
+      <div class="row marketing">
+        <h2>Instructions</h2>
+        <ul>
+          <li>Create and include a script file named <code>legoBuilder.js</code> for your new module</li>
+          <li>Create a module named <code>legoBuilder</code></li>
+          <li>Bootstrap Angular by using ng-app on the body tag</li>
+        </ul>
+      </div>
     </div>
 
     <div class="footer">
@@ -66,8 +78,8 @@
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/legoBricks.js"></script>
-    <script src="scripts/app.js"></script>
+      <!-- add legoBuilder module file here -->
+
     <!-- endbuild -->
 </body>
 </html>
