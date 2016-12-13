@@ -20,3 +20,7 @@ $ ember new project-name
 $ ember serve
 
 # Inside the application
+
+How to create a Route?
+
+$ ember generate route route-name
