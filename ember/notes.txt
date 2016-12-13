@@ -24,3 +24,5 @@ $ ember serve
 How to create a Route?
 
 $ ember generate route route-name
+
+
