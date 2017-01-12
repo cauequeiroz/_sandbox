@@ -52,3 +52,9 @@ gulp.src('sass/**/*.scss')
 
 ```
 gulp.watch('sass/**/*.scss', ['styles']);
+
+---
+
+## Expressive Live Editing
+
+- Usar o BrowserSync para fazer live reloding.
