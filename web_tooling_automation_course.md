@@ -33,3 +33,13 @@ gulp.task('default', function() {
 	// do some stuff here...
 });
 ```
+
+2. Compilar o Sass
+
+```
+var sass = require('gulp-sass');
+
+gulp.src('sass/**/*.scss')
+	.pipe(sass())
+	.pipe(gulp.dest('./css'))
+```
