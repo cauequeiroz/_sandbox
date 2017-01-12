@@ -52,6 +52,7 @@ gulp.src('sass/**/*.scss')
 
 ```
 gulp.watch('sass/**/*.scss', ['styles']);
+```
 
 ---
 
