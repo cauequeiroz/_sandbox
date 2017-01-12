@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('default', function() {
 	console.log('============================');
@@ -7,6 +8,8 @@ gulp.task('default', function() {
 	console.log('Start development...');
 	console.log('');
 	console.log('============================');
+
+	gulp.watch('sass/**/*.scss', ['styles']);
 });
 
 gulp.task('styles', function() {
@@ -14,5 +17,8 @@ gulp.task('styles', function() {
 
 	gulp.src('sass/**/*.scss')
 		.pipe(sass())
+		.pipe(autoprefixer({
+			browsers: ['last 2 versions']
+		}))
 		.pipe(gulp.dest('./css'))
 });

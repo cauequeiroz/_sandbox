@@ -1,7 +1,10 @@
 $font-stack:    Helvetica, sans-serif;
-$primary-color: #333;
+$primary-color: #ddd;
 
 body {
   font: 100% $font-stack;
   color: $primary-color;
+  initial-letter: 1.5;
+  filter: blur(5px);
+  background-color: $primary-color;
 }

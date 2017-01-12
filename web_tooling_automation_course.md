@@ -34,12 +34,21 @@ gulp.task('default', function() {
 });
 ```
 
-2. Compilar o Sass
+2. Compilar o Sass e aplicar Autoprefixer
 
 ```
 var sass = require('gulp-sass');
+var auto = require('gulp-autoprefixer');
 
 gulp.src('sass/**/*.scss')
 	.pipe(sass())
+	.pipe(auto({
+		browsers: ['last 2 versions']
+	}))
 	.pipe(gulp.dest('./css'))
 ```
+
+3. Monitorar mudanças
+
+```
+gulp.watch('sass/**/*.scss', ['styles']);
