@@ -14,3 +14,22 @@ Notas pessoais feitas durante o curso oferecido pela Udacity.
 	- SidebarEnchancements
 	- Color Picker
 	- Color Highlighter
+
+---
+
+## Powerful Builds
+
+- Usar um automatizador de tarefas
+- Os recomendados: Grunt e Gulp
+
+### Gulp
+
+1. Tarefa padrão
+
+```
+var gulp = require('gulp');
+
+gulp.task('default', function() {
+	// do some stuff here...
+});
+```
